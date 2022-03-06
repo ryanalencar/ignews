@@ -29,6 +29,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/indent': 'warn',
+    'react/function-component-definition': 'off',
     'function-paren-newline': 'off',
     'react/jsx-curly-newline': 'off',
     'no-nested-ternary': 'off',
