@@ -3,6 +3,6 @@ export function formatPrice(value: number) {
 
   return new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: locale === 'pt-BR' ? 'BRL' : 'USD',
+    currency: locale === 'pt-BR' ? 'USD' : 'BRL',
   }).format(value);
 }

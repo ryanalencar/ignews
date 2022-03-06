@@ -2,7 +2,11 @@ import React from 'react';
 
 import styles from './styles.module.scss';
 
-export default function SubscribeButton() {
+interface ISubscribeButtonProps {
+  priceId: string;
+}
+
+export default function SubscribeButton({ priceId }: ISubscribeButtonProps) {
   return (
     <button type="button" className={styles.subscribeButton}>
       Subscribe now
