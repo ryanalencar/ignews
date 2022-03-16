@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next';
+import type { GetStaticProps } from 'next';
 import Head from 'next/head';
 
 import SubscribeButton from '../components/SubscribeButton';
@@ -15,7 +15,7 @@ interface IHomeProps {
   product: Product;
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve('price_1KaOiyCroRuxxyCwloO1QCwo');
 
   const product = {
