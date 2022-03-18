@@ -52,7 +52,7 @@ export default function Home({ product }: IHomeProps) {
           </p>
           <SubscribeButton priceId={priceId} />
         </section>
-        <img src="/images/avatar.svg" alt="" />
+        <img src="/images/avatar.svg" alt="Person on computer" />
       </main>
     </>
   );
