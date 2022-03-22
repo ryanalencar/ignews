@@ -12,9 +12,7 @@ export default function Header() {
           <a href="/" className={styles.active}>
             Home
           </a>
-          <a href="/" className>
-            Posts
-          </a>
+          <a href="/">Posts</a>
         </nav>
         <SignInButton />
       </div>
