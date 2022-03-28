@@ -19,29 +19,25 @@ export default async function Subscribe(
     let stripeCustomer;
 
     if (!customerExists) {
-      console.log('customer dont exist');
       stripeCustomer = await stripe.customers.create({
         email: session.user.email,
       });
     } else {
-      console.log('customer exist');
       stripeCustomer = customerExists;
     }
 
-    console.log(stripeCustomer);
+    const stripeCheckoutSession = await stripe.checkout.sessions.create({
+      customer: stripeCustomer.id,
+      allow_promotion_codes: true,
+      cancel_url: process.env.STRIPE_CANCEL_URL,
+      success_url: process.env.STRIPE_SUCCESS_URL,
+      billing_address_collection: 'required',
+      line_items: [{ price: 'price_1KaOiyCroRuxxyCwloO1QCwo', quantity: 1 }],
+      mode: 'subscription',
+      payment_method_types: ['card'],
+    });
 
-    // const stripeCheckoutSession = await stripe.checkout.sessions.create({
-    //   customer: stripeCustomer,
-    //   allow_promotion_codes: true,
-    //   cancel_url: process.env.STRIPE_CANCEL_URL,
-    //   success_url: process.env.STRIPE_SUCCESS_URL,
-    //   billing_address_collection: 'required',
-    //   line_items: [{ price: req.body.priceId, quantity: 1 }],
-    //   mode: 'subscription',
-    //   payment_method_types: ['card'],
-    // });
-
-    // return res.status(200).json({ sessionId: stripeCheckoutSession.id });
+    return res.status(200).json({ sessionId: stripeCheckoutSession.id });
   }
   res.setHeader('Allow', 'POST');
   res.status(405).end('Method not allowed');
