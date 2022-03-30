@@ -1,7 +1,18 @@
+import { query as q } from 'faunadb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
+import { fauna } from '../../services/fauna';
 import { stripe } from '../../services/stripe';
+
+type User = {
+  ref: {
+    id: string;
+  };
+  data: {
+    stripe_customer_id: string;
+  };
+};
 
 export default async function Subscribe(
   req: NextApiRequest,
@@ -9,30 +20,37 @@ export default async function Subscribe(
 ) {
   if (req.method === 'POST') {
     const session = await getSession({ req });
-    const { email } = session?.user;
+    const { email } = session.user;
 
-    const customers = await stripe.customers.list();
-    const customerExists = customers.data.find((customer) =>
-      customer.email === email ? customer : false,
+    const user = await fauna.query<User>(
+      q.Get(q.Match(q.Index('user_by_email'), q.Casefold(email))),
     );
 
-    let stripeCustomer;
+    let customerId = user.data.stripe_customer_id;
 
-    if (!customerExists) {
-      stripeCustomer = await stripe.customers.create({
-        email: session.user.email,
+    if (!customerId) {
+      const stripeCustomer = await stripe.customers.create({
+        email,
       });
-    } else {
-      stripeCustomer = customerExists;
+
+      await fauna.query(
+        q.Update(q.Ref(q.Collection('users'), user.ref.id), {
+          data: {
+            stripe_customer_id: stripeCustomer.id,
+          },
+        }),
+      );
+
+      customerId = stripeCustomer.id;
     }
 
     const stripeCheckoutSession = await stripe.checkout.sessions.create({
-      customer: stripeCustomer.id,
+      customer: customerId,
       allow_promotion_codes: true,
       cancel_url: process.env.STRIPE_CANCEL_URL,
       success_url: process.env.STRIPE_SUCCESS_URL,
       billing_address_collection: 'required',
-      line_items: [{ price: 'price_1KaOiyCroRuxxyCwloO1QCwo', quantity: 1 }],
+      line_items: [{ price: req.body.priceId, quantity: 1 }],
       mode: 'subscription',
       payment_method_types: ['card'],
     });
