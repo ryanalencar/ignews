@@ -18,8 +18,6 @@ interface IHomeProps {
 export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve('price_1KaOiyCroRuxxyCwloO1QCwo');
 
-  console.log(price.unit_amount / 100);
-
   const product = {
     priceId: price.id,
     amount: price.unit_amount ? price.unit_amount / 100 : 0,

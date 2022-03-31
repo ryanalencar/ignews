@@ -57,6 +57,7 @@ export default async function Subscribe(
 
     return res.status(200).json({ sessionId: stripeCheckoutSession.id });
   }
+
   res.setHeader('Allow', 'POST');
   res.status(405).end('Method not allowed');
 }
