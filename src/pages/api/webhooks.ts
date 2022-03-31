@@ -23,7 +23,11 @@ export const config = {
   },
 };
 
-const relevantStripeEvents = new Set(['checkout.session.completed']);
+const relevantStripeEvents = new Set([
+  'checkout.session.completed',
+  'customer.subscription.deleted',
+  'customer.subscription.updated',
+]);
 
 export default async function WebHooks(
   req: NextApiRequest,
@@ -45,18 +49,27 @@ export default async function WebHooks(
       return res.status(400).send(`Webhook Error: ${getErrorMessage(error)}`);
     }
 
-    const { type } = event;
+    const { type, data } = event;
 
     if (relevantStripeEvents.has(type)) {
       try {
         switch (type) {
+          case 'customer.subscription.updated':
+          case 'customer.subscription.deleted':
+            const subscription = data.object as Stripe.Subscription;
+
+            await saveSubscription(
+              subscription.id,
+              subscription.customer.toString(),
+            );
+            break;
           case 'checkout.session.completed':
-            const checkoutSession = event.data
-              .object as Stripe.Checkout.Session;
+            const checkoutSession = data.object as Stripe.Checkout.Session;
 
             await saveSubscription(
               checkoutSession?.subscription?.toString() || '',
               checkoutSession?.customer?.toString() || '',
+              true,
             );
             break;
           default:

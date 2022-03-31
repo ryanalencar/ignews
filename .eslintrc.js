@@ -28,6 +28,7 @@ module.exports = {
     'unused-imports'
   ],
   rules: {
+    'no-case-declarations': 'off',
     'no-restricted-syntax': 'off',
     'linebreak-style': 'off',
     'react/jsx-one-expression-per-line': 'off',
