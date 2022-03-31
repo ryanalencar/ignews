@@ -5,6 +5,7 @@ import Stripe from 'stripe';
 
 import { stripe } from '../../services/stripe';
 import { getErrorMessage } from '../../utils/error';
+import { saveSubscription } from './_lib/manageSubscriptions';
 
 async function buffer(readable: Readable) {
   const chunks = [];
@@ -47,7 +48,23 @@ export default async function WebHooks(
     const { type } = event;
 
     if (relevantStripeEvents.has(type)) {
-      console.log('Event received:', event);
+      try {
+        switch (type) {
+          case 'checkout.session.completed':
+            const checkoutSession = event.data
+              .object as Stripe.Checkout.Session;
+
+            await saveSubscription(
+              checkoutSession?.subscription?.toString() || '',
+              checkoutSession?.customer?.toString() || '',
+            );
+            break;
+          default:
+            throw new Error('Unhandled event');
+        }
+      } catch (err) {
+        return res.json({ error: 'Webhook handle failed' });
+      }
     }
 
     res.json({ received: true });
