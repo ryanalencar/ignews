@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Link from 'next/link';
+import Image from 'next/image';
 
+import ActiveLink from '../ActiveLink';
 import SignInButton from '../SignInButton';
 import styles from './styles.module.scss';
 
@@ -9,10 +10,20 @@ export default function Header() {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
-        <img src="/images/logo.svg" alt="ig.news" />
+        <Image
+          src="/images/logo.svg"
+          width="110"
+          height="31"
+          alt="Logo ig.news"
+          priority
+        />
         <nav>
-          <Link href="/">Home</Link>
-          <Link href="/posts">Posts</Link>
+          <ActiveLink activeClassName={styles.active} href="/">
+            <a>Home</a>
+          </ActiveLink>
+          <ActiveLink activeClassName={styles.active} href="/posts">
+            <a>Posts</a>
+          </ActiveLink>
         </nav>
         <SignInButton />
       </div>
