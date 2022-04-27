@@ -39,6 +39,8 @@ interface IPostsProps {
 }
 
 export default function Posts({ posts }: IPostsProps) {
+  const EXCERPT_CHAR_LIMIT = 150;
+
   return (
     <>
       <Head>
@@ -50,7 +52,11 @@ export default function Posts({ posts }: IPostsProps) {
             <a key={post.slug} href="#">
               <time>{post.updatedAt}</time>
               <strong>{post.title}</strong>
-              <p>{post.excerpt}</p>
+              <p>
+                {post.excerpt.length <= EXCERPT_CHAR_LIMIT
+                  ? post.excerpt
+                  : `${post.excerpt.slice(0, EXCERPT_CHAR_LIMIT)}...`}
+              </p>
             </a>
           ))}
         </div>
