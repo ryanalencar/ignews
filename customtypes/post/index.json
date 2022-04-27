@@ -12,6 +12,14 @@
           "placeholder": ""
         }
       },
+      "banner": {
+        "type": "Image",
+        "config": {
+          "label": "Banner",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "title": {
         "type": "Text",
         "config": {

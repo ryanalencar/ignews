@@ -6,7 +6,7 @@ import sm from '../../sm.json';
 export const endpoint = sm.apiEndpoint;
 export const repositoryName = prismic.getRepositoryName(endpoint);
 
-export function createClient(config: prismic.ClientConfig | undefined = {}) {
+export function createClient(config: any | undefined = {}) {
   const client = prismic.createClient(endpoint, {
     ...config,
     accessToken: process.env.PRISMIC_ACCESS_TOKEN,

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import { createClient } from '../../services/prismic';
 import styles from './posts.module.scss';
@@ -11,6 +12,10 @@ type Post = {
   excerpt: string;
   updatedAt: string;
 };
+
+interface IPostsProps {
+  posts: Post[];
+}
 
 export const getStaticProps: GetStaticProps = async ({ previewData }) => {
   const prismic = createClient({ previewData });
@@ -34,10 +39,6 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
   return { props: { posts } };
 };
 
-interface IPostsProps {
-  posts: Post[];
-}
-
 export default function Posts({ posts }: IPostsProps) {
   const EXCERPT_CHAR_LIMIT = 150;
 
@@ -49,15 +50,17 @@ export default function Posts({ posts }: IPostsProps) {
       <main className={styles.container}>
         <div className={styles.posts}>
           {posts.map((post) => (
-            <a key={post.slug} href="#">
-              <time>{post.updatedAt}</time>
-              <strong>{post.title}</strong>
-              <p>
-                {post.excerpt.length <= EXCERPT_CHAR_LIMIT
-                  ? post.excerpt
-                  : `${post.excerpt.slice(0, EXCERPT_CHAR_LIMIT)}...`}
-              </p>
-            </a>
+            <Link key={post.slug} href={`/posts/${post.slug}`} passHref>
+              <a>
+                <time>{post.updatedAt}</time>
+                <strong>{post.title}</strong>
+                <p>
+                  {post.excerpt.length <= EXCERPT_CHAR_LIMIT
+                    ? post.excerpt
+                    : `${post.excerpt.slice(0, EXCERPT_CHAR_LIMIT)}...`}
+                </p>
+              </a>
+            </Link>
           ))}
         </div>
       </main>

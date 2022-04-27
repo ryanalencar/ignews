@@ -1,13 +1,22 @@
 {
-  "id": "57f02f3d-3530-4394-a84f-9bbc0f598dfc",
-  "uid": "alias-aspernatur-cupiditate",
+  "id": "751dfa71-ff59-4343-bec2-aadfab66dd49",
+  "uid": "minima-nam-asperiores",
   "type": "post",
   "data": {
-    "title": "empower holistic vortals",
+    "banner": {
+      "dimensions": {
+        "width": 900,
+        "height": 500
+      },
+      "alt": "Placeholder image",
+      "copyright": null,
+      "url": "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=900&h=500&fit=crop"
+    },
+    "title": "redefine one-to-one initiatives",
     "content": [
       {
         "type": "paragraph",
-        "text": "Reprehenderit nulla laboris quis pariatur. Pariatur id elit nostrud elit elit cupidatat cillum veniam dolor sint cupidatat. Laboris exercitation dolore nisi ad ex.",
+        "text": "Ullamco ea ut proident irure dolore tempor mollit ipsum magna. Cupidatat id veniam ad ullamco ullamco culpa officia. Mollit fugiat consectetur ut aliqua culpa amet.",
         "spans": []
       }
     ]
