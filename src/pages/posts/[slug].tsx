@@ -34,6 +34,17 @@ export const getServerSideProps: GetServerSideProps = async ({
   const prismic = createClient({ req, previewData });
   const { slug } = params;
 
+  console.log('session', session);
+
+  if (!session?.activeSubscription) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   const prismicPost = await prismic.getByUID('post', String(slug));
 
   const post = {
@@ -51,14 +62,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 export default function Post({ post }: IPostsProps) {
   const { content, title, updatedAt, banner } = post;
-  console.log(post);
 
   return (
     <>
       <Head>
         <title>{post.title} | Ignews</title>
       </Head>
-      {banner && (
+      {banner && banner.url && (
         <section className={`${styles.mHero} ${styles.withPicture}`}>
           <div className={`${styles.mHeroPicture} ${styles.inPost}`}>
             <Image src={banner.url} alt={banner.alt} layout="fill" />
