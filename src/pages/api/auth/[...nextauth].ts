@@ -31,10 +31,8 @@ export default NextAuth({
             ),
           ),
         );
-        console.log(userActiveSubscription);
         return { ...session, activeSubscription: userActiveSubscription };
       } catch (error) {
-        console.log('aaa', error);
         return {
           ...session,
           activeSubscription: null,

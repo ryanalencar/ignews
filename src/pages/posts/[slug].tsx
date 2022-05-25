@@ -34,8 +34,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   const prismic = createClient({ req, previewData });
   const { slug } = params;
 
-  console.log('session', session);
-
   if (!session?.activeSubscription) {
     return {
       redirect: {
