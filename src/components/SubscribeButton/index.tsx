@@ -8,7 +8,7 @@ import { getStripeJs } from '../../services/stripe-js';
 import styles from './styles.module.scss';
 
 interface ISubscribeButtonProps {
-  priceId: string;
+  priceId?: string;
 }
 
 export default function SubscribeButton({ priceId }: ISubscribeButtonProps) {
