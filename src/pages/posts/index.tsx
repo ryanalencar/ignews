@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { createClient } from '../../services/prismic';
 import styles from './posts.module.scss';
 
-type Post = {
+export type Post = {
   slug: string;
   title: string;
   excerpt: string;
