@@ -8,18 +8,18 @@ import Image from 'next/image';
 import { createClient } from '../../services/prismic';
 import styles from './post.module.scss';
 
-interface IPostsProps {
+interface IPostProps {
   post: {
     slug: string;
-    banner: {
+    banner?: {
       url: string;
       alt: string;
     };
     title: string;
-    content: {
+    content?: {
       type: string;
       text: string;
-      spans: { start: number; end: number; type: string }[];
+      spans?: { start: number; end: number; type: string }[];
     }[];
     updatedAt: string;
   };
@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   return { props: { post } };
 };
 
-export default function Post({ post }: IPostsProps) {
+export default function Post({ post }: IPostProps) {
   const { content, title, updatedAt, banner } = post;
 
   return (
