@@ -3,7 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   images:{
     domains:['images.prismic.io']
-  }
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 }
 
 module.exports = nextConfig
