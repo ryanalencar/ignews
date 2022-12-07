@@ -1,7 +1,17 @@
 {
   "name": "ignews",
   "version": "0.1.0",
+  "description": "Content subscription platform",
   "private": true,
+  "author": "Ryan Alencar",
+  "homepage": "https://ignews-ryanalencar.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanalencar/ignews.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanalencar/ignews/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
