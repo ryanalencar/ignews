@@ -35,7 +35,6 @@ yarn test
 
 👤 **Ryan Alencar**
 
-* Website: https://www.linkedin.com/in/ryanalencar/
 * Github: [@ryanalencar](https://github.com/ryanalencar)
 * LinkedIn: [@ryanalencar](https://linkedin.com/in/ryanalencar)
 
